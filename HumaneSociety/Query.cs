@@ -212,16 +212,94 @@ namespace HumaneSociety
         // TODO: Misc Animal Things
         internal static int GetCategoryId(string categoryName)
         {
+
+            switch (categoryName)
+            {
+                case "Cat":
+                    Category animalCategory1 = db.Categories.Where(e => e.Name == "Cat").FirstOrDefault();
+                    return animalCategory1.CategoryId;
+                case "Dog":
+                    Category animalCategory2 = db.Categories.Where(e => e.Name == "Dog").FirstOrDefault();
+                    return animalCategory2.CategoryId;
+                case "Bird":
+                    Category animalCategory3 = db.Categories.Where(e => e.Name == "Bird").FirstOrDefault();
+                    return animalCategory3.CategoryId;
+                case "Micro Pig":
+                    Category animalCategory4 = db.Categories.Where(e => e.Name == "Micro Pig").FirstOrDefault();
+                    return animalCategory4.CategoryId;
+                case "Rabbit":
+                    Category animalCategory5 = db.Categories.Where(e => e.Name == "Rabbit").FirstOrDefault();
+                    return animalCategory5.CategoryId;
+                default:
+                    break;
+            }
+
             throw new NotImplementedException();
         }
         
         internal static Room GetRoom(int animalId)
         {
+            switch (animalId)
+            {
+                case 1:
+                    Room animalRoom1 = db.Rooms.Where(e => e.AnimalId == 1).FirstOrDefault();
+                    return animalRoom1;
+                case 2:
+                    Room animalRoom2 = db.Rooms.Where(e => e.AnimalId == 2).FirstOrDefault();
+                    return animalRoom2;
+                case 3:
+                    Room animalRoom3 = db.Rooms.Where(e => e.AnimalId == 3).FirstOrDefault();
+                    return animalRoom3;
+                case 4:
+                    Room animalRoom4 = db.Rooms.Where(e => e.AnimalId == 4).FirstOrDefault();
+                    return animalRoom4;
+                case 5:
+                    Room animalRoom5 = db.Rooms.Where(e => e.AnimalId == 5).FirstOrDefault();
+                    return animalRoom5;
+                case 6:
+                    Room animalRoom6 = db.Rooms.Where(e => e.AnimalId == 6).FirstOrDefault();
+                    return animalRoom6;
+                case 7:
+                    Room animalRoom7 = db.Rooms.Where(e => e.AnimalId == 7).FirstOrDefault();
+                    return animalRoom7;
+                case 8:
+                    Room animalRoom8 = db.Rooms.Where(e => e.AnimalId == 8).FirstOrDefault();
+                    return animalRoom8;
+                case 9:
+                    Room animalRoom9 = db.Rooms.Where(e => e.AnimalId == 9).FirstOrDefault();
+                    return animalRoom9;
+                case 10:
+                    Room animalRoom10 = db.Rooms.Where(e => e.AnimalId == 10).FirstOrDefault();
+                    return animalRoom10;
+                default:
+                    break;
+            }
             throw new NotImplementedException();
         }
         
         internal static int GetDietPlanId(string dietPlanName)
         {
+            switch (dietPlanName)
+            {
+                case "Cat Food":
+                    DietPlan animalDietPlan1 = db.DietPlans.Where(e => e.Name == "Cat Food").FirstOrDefault();
+                    return animalDietPlan1.DietPlanId;
+                case "Dog Food":
+                    DietPlan animalDietPlan2 = db.DietPlans.Where(e => e.Name == "Dog Food").FirstOrDefault();
+                    return animalDietPlan2.DietPlanId;
+                case "Bird Food":
+                    DietPlan animalDietPlan3 = db.DietPlans.Where(e => e.Name == "Bird Food").FirstOrDefault();
+                    return animalDietPlan3.DietPlanId;
+                case "Pig Food":
+                    DietPlan animalDietPlan4 = db.DietPlans.Where(e => e.Name == "Pig Food").FirstOrDefault();
+                    return animalDietPlan4.DietPlanId;
+                case "Rabbit Food":
+                    DietPlan animalDietPlan5 = db.DietPlans.Where(e => e.Name == "Rabbit Food").FirstOrDefault();
+                    return animalDietPlan5.DietPlanId;
+                default:
+                    break;
+
+            }
             throw new NotImplementedException();
         }
 
