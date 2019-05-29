@@ -170,6 +170,7 @@ namespace HumaneSociety
                     UpdateEmployee(employee);
                     break;
                 default:
+                    UserInterface.DisplayUserOptions("Input not recognized please try again or type exit");
                     break;
             }
         }
@@ -385,14 +386,17 @@ namespace HumaneSociety
         // TODO: Adoption CRUD Operations
         internal static void Adopt(Animal animal, Client client)
         {
-            Adoption adoption = new Adoption();
-            adoption.ClientId = client.ClientId;
-            adoption.AnimalId = animal.AnimalId;
-            adoption.ApprovalStatus = "awaiting";
-            adoption.AdoptionFee = 75;
-            adoption.PaymentCollected = true;
-            db.Adoptions.InsertOnSubmit(adoption);
-            db.SubmitChanges();
+            if (animal.AdoptionStatus != "approved")
+            {
+                Adoption adoption = new Adoption();
+                adoption.ClientId = client.ClientId;
+                adoption.AnimalId = animal.AnimalId;
+                adoption.ApprovalStatus = "awaiting";
+                adoption.AdoptionFee = 75;
+                adoption.PaymentCollected = true;
+                db.Adoptions.InsertOnSubmit(adoption);
+                db.SubmitChanges();
+            }
         }
 
         internal static IQueryable<Adoption> GetPendingAdoptions()
@@ -407,6 +411,7 @@ namespace HumaneSociety
             {
                 case true:
                     adoption.ApprovalStatus = "approved";
+
                     break;
                 case false:
                     adoption.ApprovalStatus = "denied";
@@ -418,7 +423,12 @@ namespace HumaneSociety
 
         internal static void RemoveAdoption(int animalId, int clientId)
         {
-            throw new NotImplementedException();
+            Adoption adoptionToRemove = db.Adoptions.Where(a => a.AnimalId == animalId && a.ClientId == clientId).FirstOrDefault();
+            if(adoptionToRemove != null)
+            {
+                db.Adoptions.DeleteOnSubmit(adoptionToRemove);
+                db.SubmitChanges();
+            }
         }
 
         // TODO: Shots Stuff
