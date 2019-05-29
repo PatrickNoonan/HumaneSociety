@@ -188,16 +188,87 @@ namespace HumaneSociety
         // TODO: Misc Animal Things
         internal static int GetCategoryId(string categoryName)
         {
+            
+            //switch (categoryName)
+            //{
+            //    case "Cat":
+            //        return from db.Categories
+            //               where db.Categories.Name == "Cat"
+            //               select db.Categories.CategoriesId;
+            //    case "Dog":
+            //        return from db.Categories
+            //               where db.Categories.Name == "Dog"
+            //               select db.Categories.CategoriesId;
+            //    case "Bird":
+            //        return from db.Categories
+            //               where db.Categories.Name == "Bird"
+            //               select db.Categories.CategoriesId;
+            //    case "Micro Pig":
+            //        return from db.Categories
+            //               where db.Categories.Name == "Micro Pig"
+            //               select db.Categories.CategoriesId;
+            //    case "Rabbit":
+            //        return from db.Categories
+            //               where db.Categories.Name == "Rabbit"
+            //               select db.Categories.CategoriesId;
+            //}
+
             throw new NotImplementedException();
         }
         
         internal static Room GetRoom(int animalId)
         {
+            //switch (animalId)
+            //{
+            //    case 1:
+            //        return from db.Rooms
+            //               where db.Rooms.Name == "Rabbit"
+            //               select db.Rooms.RoomsId;
+            //    case 2:
+            //        return from db.Rooms
+            //               where db.Rooms.Name == "Rabbit"
+            //               select db.Rooms.RoomsId;
+            //    case 3:
+            //        return from db.Rooms
+            //               where db.Rooms.Name == "Rabbit"
+            //               select db.Rooms.RoomsId;
+            //    case 4:
+            //        return from db.Rooms
+            //               where db.Rooms.Name == "Rabbit"
+            //               select db.Rooms.RoomsId;
+            //    case 4:
+            //        return from db.Rooms
+            //               where db.Rooms.Name == "Rabbit"
+            //               select db.Rooms.RoomsId;
+            //}
             throw new NotImplementedException();
         }
         
         internal static int GetDietPlanId(string dietPlanName)
         {
+            //switch (dietPlanName)
+            //{
+            //    case "Cat Food":
+            //        return from db.DietPlans
+            //               where db.DietPlans.Name == "Cat Food"
+            //               select db.DietPlans.DietPlanId;
+            //    case "Dog Food":
+            //        return from db.DietPlans
+            //               where db.DietPlans.Name == "Dog Food"
+            //               select db.DietPlans.DietPlanId;
+            //    case "Bird Food":
+            //        return from db.DietPlans
+            //               where db.DietPlans.Name == "Bird Food"
+            //               select db.DietPlans.DietPlanId;
+            //    case "Pig Food":
+            //        return from db.DietPlans
+            //               where db.DietPlans.Name == "Pig Food"
+            //               select db.DietPlans.DietPlanId;
+            //    case "Rabbit Food":
+            //        return from db.DietPlans
+            //               where db.DietPlans.Name == "Rabbit Food"
+            //               select db.DietPlans.DietPlanId;
+            //}
             throw new NotImplementedException();
         }
 
