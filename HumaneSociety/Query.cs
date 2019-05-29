@@ -241,34 +241,41 @@ namespace HumaneSociety
 
         internal static void UpdateAnimal(Animal animal, Dictionary<int, string> updates)
         {
-            //updates = null or it equals 1, category; 2, name; 3, age
             Animal animalToUpdate = db.Animals.Where(e => e.AnimalId == animal.AnimalId).FirstOrDefault();
-           /* switch (updates.Keys)
+            //dictionary(1, fluffy)
+            
+            foreach ( int key in updates.Keys)
             {
-                case 1:
-                    animalToUpdate.Category = animal.Category;
-                    break;
-                case "2":
-                    animalToUpdate.Name = animal.Name;
-                    break;
-                case "3":
-                    animalToUpdate.Age = animal.Age;
-                    break;
-                case "4":
-                    animalToUpdate.Demeanor = animal.Demeanor;
-                    break;
-                case "5":
-                    animalToUpdate.KidFriendly = animal.KidFriendly;
-                    break;
-                case "6":
-                    animalToUpdate.PetFriendly = animal.PetFriendly;
-                    break;
-                case "7":
-                    animalToUpdate.Weight = animal.Weight;
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }*/
+                var value = updates[key];
+
+                switch (key)
+                {
+                    case 1:
+                        animalToUpdate.CategoryId = 1;
+                            //db.Categories.Select(CategoryId).Where(e => e.Name == value).FirstOrDefault();
+                        break;
+                    case 2:
+                        animalToUpdate.Name = value;
+                        break;
+                    case 3:
+                        animalToUpdate.Age = Convert.ToInt32(value);
+                        break;
+                    case 4:
+                        animalToUpdate.Demeanor = value;
+                        break;
+                    case 5:
+                        animalToUpdate.KidFriendly = Convert.ToBoolean(value);
+                        break;
+                    case 6:
+                        animalToUpdate.PetFriendly = Convert.ToBoolean(value);
+                        break;
+                    case 7:
+                        animalToUpdate.Weight = Convert.ToInt32(value);
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
             db.SubmitChanges();
         }
 
