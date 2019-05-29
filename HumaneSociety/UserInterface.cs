@@ -220,5 +220,10 @@ namespace HumaneSociety
             }
             return searchParameters;
         }
+        public static void DisplayEmployeeInfo(Employee employee)
+        {
+            Console.WriteLine($"Employee Number: {employee.EmployeeNumber}\nEmployee Name: {employee.LastName}, {employee.FirstName}\nEmployee Email: {employee.Email}");
+            Console.ReadLine();
+        }
     }
 }
