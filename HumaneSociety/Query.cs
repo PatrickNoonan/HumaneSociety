@@ -170,7 +170,7 @@ namespace HumaneSociety
                     UpdateEmployee(employee);
                     break;
                 default:
-                    UserInterface.DisplayUserOptions("Input not recognized please try again or type exit");
+                    UserInterface.DisplayUserOptions("Input not recognized.");
                     break;
             }
         }
@@ -281,10 +281,48 @@ namespace HumaneSociety
         }
 
         // TODO: Animal Multi-Trait Search
-        internal static IQueryable<Animal> SearchForAnimalByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
-        {
-            throw new NotImplementedException();
-        }
+       internal static IQueryable<Animal> SearchForAnimalByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
+       {
+            var results = new List<Animal>();
+            foreach(Animal animal in db.Animals)
+            {
+                results.Add(animal);
+            }
+            if(updates.ContainsKey(1))
+            {
+                results.RemoveAll(a => a.CategoryId != Int32.Parse(updates[1]));
+            }
+            if(updates.ContainsKey(2))
+            {
+                results.RemoveAll(a => a.Name != updates[2]);
+            }
+            if(updates.ContainsKey(3))
+            {
+                results.RemoveAll(a => a.Age != Int32.Parse(updates[3]));
+            }
+            if(updates.ContainsKey(4))
+            {
+                results.RemoveAll(a => a.Demeanor != updates[4]);
+            }
+            if(updates.ContainsKey(5))
+            {
+                results.RemoveAll(a => a.KidFriendly != bool.Parse(updates[5]));
+            }
+            if(updates.ContainsKey(6))
+            {
+                results.RemoveAll(a => a.PetFriendly != bool.Parse(updates[6]));
+            }
+            if(updates.ContainsKey(7))
+            {
+                results.RemoveAll(a => a.Weight != Int32.Parse(updates[7]));
+            }
+            if(updates.ContainsKey(8))
+            {
+                results.RemoveAll(a => a.AnimalId != Int32.Parse(updates[8]));
+            }
+            var queryList = results.AsQueryable();
+            return queryList;
+       }
 
         // TODO: Misc Animal Things
         internal static int GetCategoryId(string categoryName)
@@ -381,12 +419,14 @@ namespace HumaneSociety
         {
             if (animal.AdoptionStatus != "approved")
             {
-                Adoption adoption = new Adoption();
-                adoption.ClientId = client.ClientId;
-                adoption.AnimalId = animal.AnimalId;
-                adoption.ApprovalStatus = "awaiting";
-                adoption.AdoptionFee = 75;
-                adoption.PaymentCollected = true;
+                Adoption adoption = new Adoption()
+                {
+                    ClientId = client.ClientId,
+                    AnimalId = animal.AnimalId,
+                    ApprovalStatus = "awaiting",
+                    AdoptionFee = 75,
+                    PaymentCollected = true,
+                };
                 db.Adoptions.InsertOnSubmit(adoption);
                 db.SubmitChanges();
             }
@@ -403,8 +443,7 @@ namespace HumaneSociety
             switch(isAdopted)
             {
                 case true:
-                    adoption.ApprovalStatus = "approved";
-
+                    ApproveAdoption(adoption);
                     break;
                 case false:
                     adoption.ApprovalStatus = "denied";
@@ -412,6 +451,16 @@ namespace HumaneSociety
                     break;
             }
             db.SubmitChanges();
+        }
+        internal static void ApproveAdoption(Adoption adoption)
+        {
+            adoption.ApprovalStatus = "approved";
+            Animal animalToAdopt = db.Animals.Where(a => a.AnimalId == adoption.AnimalId).FirstOrDefault();
+            if (adoption.PaymentCollected == true)
+            {
+                RemoveAdoption(adoption.AnimalId, adoption.ClientId);
+                RemoveAnimal(animalToAdopt);
+            }
         }
 
         internal static void RemoveAdoption(int animalId, int clientId)
