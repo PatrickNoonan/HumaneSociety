@@ -242,34 +242,39 @@ namespace HumaneSociety
 
         internal static void UpdateAnimal(Animal animal, Dictionary<int, string> updates)
         {
-            //updates = null or it equals 1, category; 2, name; 3, age
             Animal animalToUpdate = db.Animals.Where(e => e.AnimalId == animal.AnimalId).FirstOrDefault();
-           /* switch (updates.Keys)
+            
+            foreach ( int key in updates.Keys)
             {
-                case 1:
-                    animalToUpdate.Category = animal.Category;
-                    break;
-                case "2":
-                    animalToUpdate.Name = animal.Name;
-                    break;
-                case "3":
-                    animalToUpdate.Age = animal.Age;
-                    break;
-                case "4":
-                    animalToUpdate.Demeanor = animal.Demeanor;
-                    break;
-                case "5":
-                    animalToUpdate.KidFriendly = animal.KidFriendly;
-                    break;
-                case "6":
-                    animalToUpdate.PetFriendly = animal.PetFriendly;
-                    break;
-                case "7":
-                    animalToUpdate.Weight = animal.Weight;
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }*/
+                var value = updates[key];
+
+                switch (key)
+                {
+                    case 1:
+                        animalToUpdate.CategoryId = db.Categories.Where(e => e.Name == value).Select(c => c.CategoryId).FirstOrDefault();
+                        break;
+                    case 2:
+                        animalToUpdate.Name = value;
+                        break;
+                    case 3:
+                        animalToUpdate.Age = Convert.ToInt32(value);
+                        break;
+                    case 4:
+                        animalToUpdate.Demeanor = value;
+                        break;
+                    case 5:
+                        animalToUpdate.KidFriendly = Convert.ToBoolean(value);
+                        break;
+                    case 6:
+                        animalToUpdate.PetFriendly = Convert.ToBoolean(value);
+                        break;
+                    case 7:
+                        animalToUpdate.Weight = Convert.ToInt32(value);
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
             db.SubmitChanges();
         }
 
@@ -331,84 +336,50 @@ namespace HumaneSociety
             switch (categoryName)
             {
                 case "Cat":
-                    Category animalCategory1 = db.Categories.Where(e => e.Name == "Cat").FirstOrDefault();
-                    return animalCategory1.CategoryId;
+                    Category catCategory = db.Categories.Where(e => e.Name == "Cat").FirstOrDefault();
+                    return catCategory.CategoryId;
                 case "Dog":
-                    Category animalCategory2 = db.Categories.Where(e => e.Name == "Dog").FirstOrDefault();
-                    return animalCategory2.CategoryId;
+                    Category dogCategory = db.Categories.Where(e => e.Name == "Dog").FirstOrDefault();
+                    return dogCategory.CategoryId;
                 case "Bird":
-                    Category animalCategory3 = db.Categories.Where(e => e.Name == "Bird").FirstOrDefault();
-                    return animalCategory3.CategoryId;
+                    Category birdCategory = db.Categories.Where(e => e.Name == "Bird").FirstOrDefault();
+                    return birdCategory.CategoryId;
                 case "Micro Pig":
-                    Category animalCategory4 = db.Categories.Where(e => e.Name == "Micro Pig").FirstOrDefault();
-                    return animalCategory4.CategoryId;
+                    Category pigCategory = db.Categories.Where(e => e.Name == "Micro Pig").FirstOrDefault();
+                    return pigCategory.CategoryId;
                 case "Rabbit":
-                    Category animalCategory5 = db.Categories.Where(e => e.Name == "Rabbit").FirstOrDefault();
-                    return animalCategory5.CategoryId;
+                    Category rabbitCategory = db.Categories.Where(e => e.Name == "Rabbit").FirstOrDefault();
+                    return rabbitCategory.CategoryId;
                 default:
                     throw new NotImplementedException();
             }            
         }
         
         internal static Room GetRoom(int animalId)
-        {
-            switch (animalId)
-            {
-                case 1:
-                    Room animalRoom1 = db.Rooms.Where(e => e.AnimalId == 1).FirstOrDefault();
-                    return animalRoom1;
-                case 2:
-                    Room animalRoom2 = db.Rooms.Where(e => e.AnimalId == 2).FirstOrDefault();
-                    return animalRoom2;
-                case 3:
-                    Room animalRoom3 = db.Rooms.Where(e => e.AnimalId == 3).FirstOrDefault();
-                    return animalRoom3;
-                case 4:
-                    Room animalRoom4 = db.Rooms.Where(e => e.AnimalId == 4).FirstOrDefault();
-                    return animalRoom4;
-                case 5:
-                    Room animalRoom5 = db.Rooms.Where(e => e.AnimalId == 5).FirstOrDefault();
-                    return animalRoom5;
-               //necessary?
-                case 6:
-                    Room animalRoom6 = db.Rooms.Where(e => e.AnimalId == 6).FirstOrDefault();
-                    return animalRoom6;
-                case 7:
-                    Room animalRoom7 = db.Rooms.Where(e => e.AnimalId == 7).FirstOrDefault();
-                    return animalRoom7;
-                case 8:
-                    Room animalRoom8 = db.Rooms.Where(e => e.AnimalId == 8).FirstOrDefault();
-                    return animalRoom8;
-                case 9:
-                    Room animalRoom9 = db.Rooms.Where(e => e.AnimalId == 9).FirstOrDefault();
-                    return animalRoom9;
-                case 10:
-                    Room animalRoom10 = db.Rooms.Where(e => e.AnimalId == 10).FirstOrDefault();
-                    return animalRoom10;
-                default:
-                    throw new NotImplementedException(); ;
-            }
+        {            
+            Room animalRoom = db.Rooms.Where(e => e.AnimalId == animalId).FirstOrDefault();
+            return animalRoom;
         }
-        
+
         internal static int GetDietPlanId(string dietPlanName)
         {
             switch (dietPlanName)
             {
                 case "Cat Food":
-                    DietPlan animalDietPlan1 = db.DietPlans.Where(e => e.Name == "Cat Food").FirstOrDefault();
-                    return animalDietPlan1.DietPlanId;
+                    DietPlan catDietPlan = db.DietPlans.Where(e => e.Name == "Cat Food").FirstOrDefault();
+                    return catDietPlan.DietPlanId;
                 case "Dog Food":
-                    DietPlan animalDietPlan2 = db.DietPlans.Where(e => e.Name == "Dog Food").FirstOrDefault();
-                    return animalDietPlan2.DietPlanId;
+                    DietPlan dogDietPlan = db.DietPlans.Where(e => e.Name == "Dog Food").FirstOrDefault();
+                    return dogDietPlan.DietPlanId;
                 case "Bird Food":
-                    DietPlan animalDietPlan3 = db.DietPlans.Where(e => e.Name == "Bird Food").FirstOrDefault();
-                    return animalDietPlan3.DietPlanId;
+                    DietPlan birdDietPlan = db.DietPlans.Where(e => e.Name == "Bird Food").FirstOrDefault();
+                    return birdDietPlan.DietPlanId;
                 case "Pig Food":
-                    DietPlan animalDietPlan4 = db.DietPlans.Where(e => e.Name == "Pig Food").FirstOrDefault();
-                    return animalDietPlan4.DietPlanId;
+                    DietPlan pigDietPlan = db.DietPlans.Where(e => e.Name == "Pig Food").FirstOrDefault();
+                    return pigDietPlan.DietPlanId;
                 case "Rabbit Food":
-                    DietPlan animalDietPlan5 = db.DietPlans.Where(e => e.Name == "Rabbit Food").FirstOrDefault();
-                    return animalDietPlan5.DietPlanId;
+                    DietPlan rabbitDietPlan = db.DietPlans.Where(e => e.Name == "Rabbit Food").FirstOrDefault();
+                    return rabbitDietPlan.DietPlanId;
                 default:
                     throw new NotImplementedException(); 
             }
@@ -473,7 +444,7 @@ namespace HumaneSociety
             }
         }
 
-        // TODO: Shots Stuff
+        //TODO: Shots Stuff
         internal static IQueryable<AnimalShot> GetShots(Animal animal)
         {
             throw new NotImplementedException();
