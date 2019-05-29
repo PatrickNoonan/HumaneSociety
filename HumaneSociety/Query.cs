@@ -243,7 +243,6 @@ namespace HumaneSociety
         internal static void UpdateAnimal(Animal animal, Dictionary<int, string> updates)
         {
             Animal animalToUpdate = db.Animals.Where(e => e.AnimalId == animal.AnimalId).FirstOrDefault();
-            //dictionary(1, fluffy)
             
             foreach ( int key in updates.Keys)
             {
@@ -252,8 +251,7 @@ namespace HumaneSociety
                 switch (key)
                 {
                     case 1:
-                        animalToUpdate.CategoryId = 1;
-                            //db.Categories.Select(CategoryId).Where(e => e.Name == value).FirstOrDefault();
+                        animalToUpdate.CategoryId = db.Categories.Where(e => e.Name == value).Select(c => c.CategoryId).FirstOrDefault();
                         break;
                     case 2:
                         animalToUpdate.Name = value;
@@ -324,7 +322,7 @@ namespace HumaneSociety
             Room animalRoom = db.Rooms.Where(e => e.AnimalId == animalId).FirstOrDefault();
             return animalRoom;
         }
-        
+
         internal static int GetDietPlanId(string dietPlanName)
         {
             switch (dietPlanName)
@@ -397,7 +395,7 @@ namespace HumaneSociety
             }
         }
 
-        // TODO: Shots Stuff
+        //TODO: Shots Stuff
         internal static IQueryable<AnimalShot> GetShots(Animal animal)
         {
             throw new NotImplementedException();
