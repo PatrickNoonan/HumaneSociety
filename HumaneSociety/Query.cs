@@ -298,20 +298,20 @@ namespace HumaneSociety
             switch (categoryName)
             {
                 case "Cat":
-                    Category animalCategory1 = db.Categories.Where(e => e.Name == "Cat").FirstOrDefault();
-                    return animalCategory1.CategoryId;
+                    Category catCategory = db.Categories.Where(e => e.Name == "Cat").FirstOrDefault();
+                    return catCategory.CategoryId;
                 case "Dog":
-                    Category animalCategory2 = db.Categories.Where(e => e.Name == "Dog").FirstOrDefault();
-                    return animalCategory2.CategoryId;
+                    Category dogCategory = db.Categories.Where(e => e.Name == "Dog").FirstOrDefault();
+                    return dogCategory.CategoryId;
                 case "Bird":
-                    Category animalCategory3 = db.Categories.Where(e => e.Name == "Bird").FirstOrDefault();
-                    return animalCategory3.CategoryId;
+                    Category birdCategory = db.Categories.Where(e => e.Name == "Bird").FirstOrDefault();
+                    return birdCategory.CategoryId;
                 case "Micro Pig":
-                    Category animalCategory4 = db.Categories.Where(e => e.Name == "Micro Pig").FirstOrDefault();
-                    return animalCategory4.CategoryId;
+                    Category pigCategory = db.Categories.Where(e => e.Name == "Micro Pig").FirstOrDefault();
+                    return pigCategory.CategoryId;
                 case "Rabbit":
-                    Category animalCategory5 = db.Categories.Where(e => e.Name == "Rabbit").FirstOrDefault();
-                    return animalCategory5.CategoryId;
+                    Category rabbitCategory = db.Categories.Where(e => e.Name == "Rabbit").FirstOrDefault();
+                    return rabbitCategory.CategoryId;
                 default:
                     throw new NotImplementedException();
             }            
@@ -328,20 +328,20 @@ namespace HumaneSociety
             switch (dietPlanName)
             {
                 case "Cat Food":
-                    DietPlan animalDietPlan1 = db.DietPlans.Where(e => e.Name == "Cat Food").FirstOrDefault();
-                    return animalDietPlan1.DietPlanId;
+                    DietPlan catDietPlan = db.DietPlans.Where(e => e.Name == "Cat Food").FirstOrDefault();
+                    return catDietPlan.DietPlanId;
                 case "Dog Food":
-                    DietPlan animalDietPlan2 = db.DietPlans.Where(e => e.Name == "Dog Food").FirstOrDefault();
-                    return animalDietPlan2.DietPlanId;
+                    DietPlan dogDietPlan = db.DietPlans.Where(e => e.Name == "Dog Food").FirstOrDefault();
+                    return dogDietPlan.DietPlanId;
                 case "Bird Food":
-                    DietPlan animalDietPlan3 = db.DietPlans.Where(e => e.Name == "Bird Food").FirstOrDefault();
-                    return animalDietPlan3.DietPlanId;
+                    DietPlan birdDietPlan = db.DietPlans.Where(e => e.Name == "Bird Food").FirstOrDefault();
+                    return birdDietPlan.DietPlanId;
                 case "Pig Food":
-                    DietPlan animalDietPlan4 = db.DietPlans.Where(e => e.Name == "Pig Food").FirstOrDefault();
-                    return animalDietPlan4.DietPlanId;
+                    DietPlan pigDietPlan = db.DietPlans.Where(e => e.Name == "Pig Food").FirstOrDefault();
+                    return pigDietPlan.DietPlanId;
                 case "Rabbit Food":
-                    DietPlan animalDietPlan5 = db.DietPlans.Where(e => e.Name == "Rabbit Food").FirstOrDefault();
-                    return animalDietPlan5.DietPlanId;
+                    DietPlan rabbitDietPlan = db.DietPlans.Where(e => e.Name == "Rabbit Food").FirstOrDefault();
+                    return rabbitDietPlan.DietPlanId;
                 default:
                     throw new NotImplementedException(); 
             }
