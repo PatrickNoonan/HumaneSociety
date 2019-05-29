@@ -231,22 +231,53 @@ namespace HumaneSociety
         // TODO: Animal CRUD Operations
         internal static void AddAnimal(Animal animal)
         {
-            throw new NotImplementedException();
-        }
-
+            db.Animals.InsertOnSubmit(animal);
+            db.SubmitChanges();
+        }    
         internal static Animal GetAnimalByID(int id)
         {
-            throw new NotImplementedException();
+            Animal AnimalToRead = db.Animals.Where(e => e.AnimalId == id).FirstOrDefault();
+            return AnimalToRead;
         }       
 
         internal static void UpdateAnimal(Animal animal, Dictionary<int, string> updates)
         {
-            throw new NotImplementedException();
+            //updates = null or it equals 1, category; 2, name; 3, age
+            Animal animalToUpdate = db.Animals.Where(e => e.AnimalId == animal.AnimalId).FirstOrDefault();
+           /* switch (updates.Keys)
+            {
+                case 1:
+                    animalToUpdate.Category = animal.Category;
+                    break;
+                case "2":
+                    animalToUpdate.Name = animal.Name;
+                    break;
+                case "3":
+                    animalToUpdate.Age = animal.Age;
+                    break;
+                case "4":
+                    animalToUpdate.Demeanor = animal.Demeanor;
+                    break;
+                case "5":
+                    animalToUpdate.KidFriendly = animal.KidFriendly;
+                    break;
+                case "6":
+                    animalToUpdate.PetFriendly = animal.PetFriendly;
+                    break;
+                case "7":
+                    animalToUpdate.Weight = animal.Weight;
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }*/
+            db.SubmitChanges();
         }
 
         internal static void RemoveAnimal(Animal animal)
         {
-            throw new NotImplementedException();
+            Animal AnimalToDelete = db.Animals.Where(e => e.AnimalId == animal.AnimalId).FirstOrDefault();
+            db.Animals.DeleteOnSubmit(AnimalToDelete);
+            db.SubmitChanges();
         }
 
         // TODO: Animal Multi-Trait Search
@@ -277,10 +308,8 @@ namespace HumaneSociety
                     Category animalCategory5 = db.Categories.Where(e => e.Name == "Rabbit").FirstOrDefault();
                     return animalCategory5.CategoryId;
                 default:
-                    break;
-            }
-
-            throw new NotImplementedException();
+                    throw new NotImplementedException();
+            }            
         }
         
         internal static Room GetRoom(int animalId)
@@ -302,6 +331,7 @@ namespace HumaneSociety
                 case 5:
                     Room animalRoom5 = db.Rooms.Where(e => e.AnimalId == 5).FirstOrDefault();
                     return animalRoom5;
+               //necessary?
                 case 6:
                     Room animalRoom6 = db.Rooms.Where(e => e.AnimalId == 6).FirstOrDefault();
                     return animalRoom6;
@@ -318,9 +348,8 @@ namespace HumaneSociety
                     Room animalRoom10 = db.Rooms.Where(e => e.AnimalId == 10).FirstOrDefault();
                     return animalRoom10;
                 default:
-                    break;
+                    throw new NotImplementedException(); ;
             }
-            throw new NotImplementedException();
         }
         
         internal static int GetDietPlanId(string dietPlanName)
@@ -343,10 +372,8 @@ namespace HumaneSociety
                     DietPlan animalDietPlan5 = db.DietPlans.Where(e => e.Name == "Rabbit Food").FirstOrDefault();
                     return animalDietPlan5.DietPlanId;
                 default:
-                    break;
-
+                    throw new NotImplementedException(); 
             }
-            throw new NotImplementedException();
         }
 
         // TODO: Adoption CRUD Operations
