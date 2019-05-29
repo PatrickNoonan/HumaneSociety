@@ -320,43 +320,9 @@ namespace HumaneSociety
         }
         
         internal static Room GetRoom(int animalId)
-        {
-            switch (animalId)
-            {
-                case 1:
-                    Room animalRoom1 = db.Rooms.Where(e => e.AnimalId == 1).FirstOrDefault();
-                    return animalRoom1;
-                case 2:
-                    Room animalRoom2 = db.Rooms.Where(e => e.AnimalId == 2).FirstOrDefault();
-                    return animalRoom2;
-                case 3:
-                    Room animalRoom3 = db.Rooms.Where(e => e.AnimalId == 3).FirstOrDefault();
-                    return animalRoom3;
-                case 4:
-                    Room animalRoom4 = db.Rooms.Where(e => e.AnimalId == 4).FirstOrDefault();
-                    return animalRoom4;
-                case 5:
-                    Room animalRoom5 = db.Rooms.Where(e => e.AnimalId == 5).FirstOrDefault();
-                    return animalRoom5;
-               //necessary?
-                case 6:
-                    Room animalRoom6 = db.Rooms.Where(e => e.AnimalId == 6).FirstOrDefault();
-                    return animalRoom6;
-                case 7:
-                    Room animalRoom7 = db.Rooms.Where(e => e.AnimalId == 7).FirstOrDefault();
-                    return animalRoom7;
-                case 8:
-                    Room animalRoom8 = db.Rooms.Where(e => e.AnimalId == 8).FirstOrDefault();
-                    return animalRoom8;
-                case 9:
-                    Room animalRoom9 = db.Rooms.Where(e => e.AnimalId == 9).FirstOrDefault();
-                    return animalRoom9;
-                case 10:
-                    Room animalRoom10 = db.Rooms.Where(e => e.AnimalId == 10).FirstOrDefault();
-                    return animalRoom10;
-                default:
-                    throw new NotImplementedException(); ;
-            }
+        {            
+            Room animalRoom = db.Rooms.Where(e => e.AnimalId == animalId).FirstOrDefault();
+            return animalRoom;
         }
         
         internal static int GetDietPlanId(string dietPlanName)
