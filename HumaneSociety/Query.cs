@@ -254,10 +254,11 @@ namespace HumaneSociety
         {
             int counter = 0;
             string[] allLines = File.ReadAllLines(@"C:\Users\Patrick\Documents\Development\devCodeCamp\Week_07\HumaneSociety\csvToLinq.csv");
-            string[] lineArray = allLines[counter].Split(',');
-            List<string> lineList = lineArray.OfType<string>().ToList();
+            
             for (int i = 0; i < allLines.Length; i++)
             {
+                string[] lineArray = allLines[counter].Split(',');
+                List<string> lineList = lineArray.OfType<string>().ToList();
                 Animal animal = new Animal();
                 UpdateAnimalWithCsv(animal, lineList);
                 counter++;
@@ -298,6 +299,7 @@ namespace HumaneSociety
                         break;
                 }
             }
+            db.Animals.InsertOnSubmit(animalToUpdate);
             db.SubmitChanges();
         }
         internal static void UpdateAnimal(Animal animal, Dictionary<int, string> updates)
