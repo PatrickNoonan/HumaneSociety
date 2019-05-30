@@ -185,7 +185,7 @@ namespace HumaneSociety
             }
             else
             {
-                throw new Exception();
+                throw new Exception("Employee already exists!");
             }
         }
         internal static void DeleteEmployee(Employee employee)
@@ -198,7 +198,7 @@ namespace HumaneSociety
             }
             else
             {
-                throw new Exception();
+                throw new NullReferenceException();
             }
         }
         internal static void DisplayEmployee(Employee employee)
@@ -210,7 +210,7 @@ namespace HumaneSociety
             }
             else
             {
-                throw new Exception();
+                throw new NullReferenceException();
             }
         }
         internal static void UpdateEmployee(Employee employee)
@@ -226,7 +226,7 @@ namespace HumaneSociety
             }
             else
             {
-                throw new Exception();
+                throw new NullReferenceException();
             }
         }
 
@@ -405,35 +405,14 @@ namespace HumaneSociety
 
         internal static int GetDietPlanId(string dietPlanName)
         {
-            switch (dietPlanName.ToLower())
+            DietPlan dietPlan = db.DietPlans.Where(d => d.Name == dietPlanName.ToLower()).FirstOrDefault();
+            if (dietPlan != null)
             {
-                case "cat":
-                    goto case "cat food";
-                case "cat food":
-                    DietPlan catDietPlan = db.DietPlans.Where(e => e.Name == "Cat Food").FirstOrDefault();
-                    return catDietPlan.DietPlanId;
-                case "dog":
-                    goto case "dog food";
-                case "dog food":
-                    DietPlan dogDietPlan = db.DietPlans.Where(e => e.Name == "Dog Food").FirstOrDefault();
-                    return dogDietPlan.DietPlanId;
-                case "bird":
-                    goto case "bird food";
-                case "bird food":
-                    DietPlan birdDietPlan = db.DietPlans.Where(e => e.Name == "Bird Food").FirstOrDefault();
-                    return birdDietPlan.DietPlanId;
-                case "pig":
-                    goto case "pig food";
-                case "pig food":
-                    DietPlan pigDietPlan = db.DietPlans.Where(e => e.Name == "Pig Food").FirstOrDefault();
-                    return pigDietPlan.DietPlanId;
-                case "rabbit":
-                    goto case "rabbit food";
-                case "rabbit food":
-                    DietPlan rabbitDietPlan = db.DietPlans.Where(e => e.Name == "Rabbit Food").FirstOrDefault();
-                    return rabbitDietPlan.DietPlanId;
-                default:
-                    return 0;
+                return dietPlan.DietPlanId;
+            }
+            else
+            {
+                throw new NullReferenceException();
             }
         }
 
