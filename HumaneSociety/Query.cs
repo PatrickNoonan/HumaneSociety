@@ -233,11 +233,6 @@ namespace HumaneSociety
         // TODO: Animal CRUD Operations
         internal static void AddAnimal(Animal animal)
         {
-<<<<<<< HEAD
-            db.Animals.InsertOnSubmit(animal);
-            db.SubmitChanges();
-        }
-=======
             Room openRoom = db.Rooms.Where(r => r.AnimalId == null).FirstOrDefault();
             if(openRoom != null)
             {
@@ -250,7 +245,6 @@ namespace HumaneSociety
                 Console.WriteLine("All rooms are full!");
             }
         }    
->>>>>>> 90c89cd6d53a276c1488625eb995f9b3d3885b94
         internal static Animal GetAnimalByID(int id)
         {
             Animal AnimalToRead = db.Animals.Where(e => e.AnimalId == id).FirstOrDefault();
@@ -400,28 +394,6 @@ namespace HumaneSociety
         // TODO: Misc Animal Things
         internal static int GetCategoryId(string categoryName)
         {
-<<<<<<< HEAD
-
-            switch (categoryName)
-            {
-                case "Cat":
-                    Category catCategory = db.Categories.Where(e => e.Name == "Cat").FirstOrDefault();
-                    return catCategory.CategoryId;
-                case "Dog":
-                    Category dogCategory = db.Categories.Where(e => e.Name == "Dog").FirstOrDefault();
-                    return dogCategory.CategoryId;
-                case "Bird":
-                    Category birdCategory = db.Categories.Where(e => e.Name == "Bird").FirstOrDefault();
-                    return birdCategory.CategoryId;
-                case "Micro Pig":
-                    Category pigCategory = db.Categories.Where(e => e.Name == "Micro Pig").FirstOrDefault();
-                    return pigCategory.CategoryId;
-                case "Rabbit":
-                    Category rabbitCategory = db.Categories.Where(e => e.Name == "Rabbit").FirstOrDefault();
-                    return rabbitCategory.CategoryId;
-                default:
-                    throw new NotImplementedException();
-=======
             Category category = db.Categories.Where(e => e.Name == categoryName.ToLower()).FirstOrDefault();
             if (category != null)
             {
@@ -434,7 +406,6 @@ namespace HumaneSociety
                 db.SubmitChanges();
                 category = db.Categories.Where(e => e.Name == categoryName).FirstOrDefault();
                 return category.CategoryId;
->>>>>>> 90c89cd6d53a276c1488625eb995f9b3d3885b94
             }
         }
 
@@ -446,27 +417,6 @@ namespace HumaneSociety
 
         internal static int GetDietPlanId(string dietPlanName)
         {
-<<<<<<< HEAD
-            switch (dietPlanName)
-            {
-                case "Cat Food":
-                    DietPlan catDietPlan = db.DietPlans.Where(e => e.Name == "Cat Food").FirstOrDefault();
-                    return catDietPlan.DietPlanId;
-                case "Dog Food":
-                    DietPlan dogDietPlan = db.DietPlans.Where(e => e.Name == "Dog Food").FirstOrDefault();
-                    return dogDietPlan.DietPlanId;
-                case "Bird Food":
-                    DietPlan birdDietPlan = db.DietPlans.Where(e => e.Name == "Bird Food").FirstOrDefault();
-                    return birdDietPlan.DietPlanId;
-                case "Pig Food":
-                    DietPlan pigDietPlan = db.DietPlans.Where(e => e.Name == "Pig Food").FirstOrDefault();
-                    return pigDietPlan.DietPlanId;
-                case "Rabbit Food":
-                    DietPlan rabbitDietPlan = db.DietPlans.Where(e => e.Name == "Rabbit Food").FirstOrDefault();
-                    return rabbitDietPlan.DietPlanId;
-                default:
-                    throw new NotImplementedException();
-=======
             DietPlan dietPlan = db.DietPlans.Where(d => d.Name == dietPlanName.ToLower()).FirstOrDefault();
             if (dietPlan != null)
             {
@@ -475,7 +425,6 @@ namespace HumaneSociety
             else
             {
                 throw new NullReferenceException();
->>>>>>> 90c89cd6d53a276c1488625eb995f9b3d3885b94
             }
         }
 
