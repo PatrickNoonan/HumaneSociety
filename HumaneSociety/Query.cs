@@ -217,9 +217,10 @@ namespace HumaneSociety
             Employee employeeToUpdate = db.Employees.Where(e => e.EmployeeNumber == employee.EmployeeNumber).FirstOrDefault();
             if (employeeToUpdate != null)
             {
-                employeeToUpdate.FirstName = employee.FirstName;
-                employeeToUpdate.LastName = employee.LastName;
-                employeeToUpdate.Email = employee.Email;
+                employeeToUpdate.FirstName = UserInterface.GetStringData("new first name", "the employee's");
+                employeeToUpdate.LastName = UserInterface.GetStringData("new last name", "the employee's");
+                employeeToUpdate.EmployeeNumber = int.Parse(UserInterface.GetStringData("new employee number", "the employee's"));
+                employeeToUpdate.Email = UserInterface.GetStringData("new email", "the employee's");
                 db.SubmitChanges();
             }
             else
@@ -231,8 +232,17 @@ namespace HumaneSociety
         // TODO: Animal CRUD Operations
         internal static void AddAnimal(Animal animal)
         {
-            db.Animals.InsertOnSubmit(animal);
-            db.SubmitChanges();
+            Room openRoom = db.Rooms.Where(r => r.AnimalId == null).FirstOrDefault();
+            if(openRoom != null)
+            {
+                openRoom.AnimalId = animal.AnimalId;
+                db.Animals.InsertOnSubmit(animal);
+                db.SubmitChanges();
+            }
+            else
+            {
+                Console.WriteLine("All rooms are full!");
+            }
         }    
         internal static Animal GetAnimalByID(int id)
         {
@@ -272,7 +282,7 @@ namespace HumaneSociety
                         animalToUpdate.Weight = Convert.ToInt32(value);
                         break;
                     default:
-                        throw new NotImplementedException();
+                        break;
                 }
             }
             db.SubmitChanges();
@@ -282,6 +292,8 @@ namespace HumaneSociety
         {
             Animal AnimalToDelete = db.Animals.Where(e => e.AnimalId == animal.AnimalId).FirstOrDefault();
             db.Animals.DeleteOnSubmit(AnimalToDelete);
+            Room roomToEmpty = db.Rooms.Where(r => r.AnimalId == animal.AnimalId).FirstOrDefault();
+            roomToEmpty.AnimalId = null;
             db.SubmitChanges();
         }
 
@@ -332,27 +344,19 @@ namespace HumaneSociety
         // TODO: Misc Animal Things
         internal static int GetCategoryId(string categoryName)
         {
-
-            switch (categoryName)
+            Category category = db.Categories.Where(e => e.Name == categoryName.ToLower()).FirstOrDefault();
+            if (category != null)
             {
-                case "Cat":
-                    Category catCategory = db.Categories.Where(e => e.Name == "Cat").FirstOrDefault();
-                    return catCategory.CategoryId;
-                case "Dog":
-                    Category dogCategory = db.Categories.Where(e => e.Name == "Dog").FirstOrDefault();
-                    return dogCategory.CategoryId;
-                case "Bird":
-                    Category birdCategory = db.Categories.Where(e => e.Name == "Bird").FirstOrDefault();
-                    return birdCategory.CategoryId;
-                case "Micro Pig":
-                    Category pigCategory = db.Categories.Where(e => e.Name == "Micro Pig").FirstOrDefault();
-                    return pigCategory.CategoryId;
-                case "Rabbit":
-                    Category rabbitCategory = db.Categories.Where(e => e.Name == "Rabbit").FirstOrDefault();
-                    return rabbitCategory.CategoryId;
-                default:
-                    throw new NotImplementedException();
-            }            
+                return category.CategoryId;
+            }
+            else
+            {
+                Category newCategory = new Category { Name = categoryName };
+                db.Categories.InsertOnSubmit(newCategory);
+                db.SubmitChanges();
+                category = db.Categories.Where(e => e.Name == categoryName).FirstOrDefault();
+                return category.CategoryId;
+            }
         }
         
         internal static Room GetRoom(int animalId)
@@ -363,25 +367,35 @@ namespace HumaneSociety
 
         internal static int GetDietPlanId(string dietPlanName)
         {
-            switch (dietPlanName)
+            switch (dietPlanName.ToLower())
             {
-                case "Cat Food":
+                case "cat":
+                    goto case "cat food";
+                case "cat food":
                     DietPlan catDietPlan = db.DietPlans.Where(e => e.Name == "Cat Food").FirstOrDefault();
                     return catDietPlan.DietPlanId;
-                case "Dog Food":
+                case "dog":
+                    goto case "dog food";
+                case "dog food":
                     DietPlan dogDietPlan = db.DietPlans.Where(e => e.Name == "Dog Food").FirstOrDefault();
                     return dogDietPlan.DietPlanId;
-                case "Bird Food":
+                case "bird":
+                    goto case "bird food";
+                case "bird food":
                     DietPlan birdDietPlan = db.DietPlans.Where(e => e.Name == "Bird Food").FirstOrDefault();
                     return birdDietPlan.DietPlanId;
-                case "Pig Food":
+                case "pig":
+                    goto case "pig food";
+                case "pig food":
                     DietPlan pigDietPlan = db.DietPlans.Where(e => e.Name == "Pig Food").FirstOrDefault();
                     return pigDietPlan.DietPlanId;
-                case "Rabbit Food":
+                case "rabbit":
+                    goto case "rabbit food";
+                case "rabbit food":
                     DietPlan rabbitDietPlan = db.DietPlans.Where(e => e.Name == "Rabbit Food").FirstOrDefault();
                     return rabbitDietPlan.DietPlanId;
                 default:
-                    throw new NotImplementedException(); 
+                    return 0;
             }
         }
 
