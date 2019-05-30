@@ -11,8 +11,9 @@ namespace HumaneSociety
         static void Main(string[] args)
         {
             //PointOfEntry.Run();
-            CSVhelper newCsvHelper = new CSVhelper();
-            newCsvHelper.csvPrinter();
+
+            Query.AddAnimalWithCsv();
+            
         }
     }
 }

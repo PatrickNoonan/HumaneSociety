@@ -1,1 +1,3 @@
-2, "Roufus", 15, "Kind", true, true, 150, male, "Not Adopted", 2, 1
+2, "Roufus", 15, "Kind", true, true, 150, male, "Not Adopted"
+1, "Mittens", 12, "Independant", true, true, 15, male, "Not Adopted"
+3, "Squacks", 50, "Noisey", true, true, 3, female, "Not Adopted"

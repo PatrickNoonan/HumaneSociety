@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace HumaneSociety
 {
     public static class Query
-    {        
+    {
         static HumaneSocietyDataContext db;
 
         static Query()
@@ -18,11 +18,11 @@ namespace HumaneSociety
 
         internal static List<USState> GetStates()
         {
-            List<USState> allStates = db.USStates.ToList();       
+            List<USState> allStates = db.USStates.ToList();
 
             return allStates;
         }
-            
+
         internal static Client GetClient(string userName, string password)
         {
             Client client = db.Clients.Where(c => c.UserName == userName && c.Password == password).Single();
@@ -56,7 +56,7 @@ namespace HumaneSociety
                 newAddress.AddressLine1 = streetAddress;
                 newAddress.City = null;
                 newAddress.USStateId = stateId;
-                newAddress.Zipcode = zipCode;                
+                newAddress.Zipcode = zipCode;
 
                 db.Addresses.InsertOnSubmit(newAddress);
                 db.SubmitChanges();
@@ -91,13 +91,13 @@ namespace HumaneSociety
             Address updatedAddress = db.Addresses.Where(a => a.AddressLine1 == clientAddress.AddressLine1 && a.USStateId == clientAddress.USStateId && a.Zipcode == clientAddress.Zipcode).FirstOrDefault();
 
             // if the address isn't found in the Db, create and insert it
-            if(updatedAddress == null)
+            if (updatedAddress == null)
             {
                 Address newAddress = new Address();
                 newAddress.AddressLine1 = clientAddress.AddressLine1;
                 newAddress.City = null;
                 newAddress.USStateId = clientAddress.USStateId;
-                newAddress.Zipcode = clientAddress.Zipcode;                
+                newAddress.Zipcode = clientAddress.Zipcode;
 
                 db.Addresses.InsertOnSubmit(newAddress);
                 db.SubmitChanges();
@@ -107,11 +107,11 @@ namespace HumaneSociety
 
             // attach AddressId to clientFromDb.AddressId
             clientFromDb.AddressId = updatedAddress.AddressId;
-            
+
             // submit changes
             db.SubmitChanges();
         }
-        
+
         internal static void AddUsernameAndPassword(Employee employee)
         {
             Employee employeeFromDb = db.Employees.Where(e => e.EmployeeId == employee.EmployeeId).FirstOrDefault();
@@ -152,11 +152,11 @@ namespace HumaneSociety
 
 
         //// TODO Items: ////
-        
+
         // TODO: Allow any of the CRUD operations to occur here
         internal static void RunEmployeeQueries(Employee employee, string crudOperation)
         {
-            switch(crudOperation)
+            switch (crudOperation)
             {
                 case "create":
                     CreateNewEmployee(employee);
@@ -233,44 +233,56 @@ namespace HumaneSociety
         internal static void AddAnimal(Animal animal)
         {
             db.Animals.InsertOnSubmit(animal);
-            db.SubmitChanges();            
-        }    
+            db.SubmitChanges();
+        }
         internal static Animal GetAnimalByID(int id)
         {
             Animal AnimalToRead = db.Animals.Where(e => e.AnimalId == id).FirstOrDefault();
             return AnimalToRead;
-        }       
-        internal static void UpdateAnimalWithCsv(Animal animal)
+        }
+        internal static void AddAnimalWithCsv()
         {
-            String[] values = File.ReadAllText(@"C:\Users\Patrick\Documents\Development\devCodeCamp\Week_07\HumaneSociety\csvToLinq.csv").Split(',');
-            List<string> valueList = values.OfType<string>().ToList();
+            int counter = 0;
+            string[] allLines = File.ReadAllLines(@"C:\Users\Patrick\Documents\Development\devCodeCamp\Week_07\HumaneSociety\csvToLinq.csv");
+            string[] lineArray = allLines[counter].Split(',');
+            List<string> lineList = lineArray.OfType<string>().ToList();
+            for (int i = 0; i < allLines.Length; i++)
+            {
+                Animal animal = new Animal();
+                UpdateAnimalWithCsv(animal, lineList);
+                counter++;
+            }
+        }
+        internal static void UpdateAnimalWithCsv(Animal animal, List<string> animalStatsList)
+        {
 
-            Animal animalToUpdate = db.Animals.Where(e => e.AnimalId == animal.AnimalId).FirstOrDefault();
 
-            for (int i = 0; i < valueList.Count; i++)
+            Animal animalToUpdate = animal;
+
+            for (int i = 0; i < animalStatsList.Count; i++)
             {
                 switch (i)
                 {
+                    case 0:
+                        animalToUpdate.CategoryId = Convert.ToInt32(animalStatsList[0]);
+                        break;
                     case 1:
-                        animalToUpdate.CategoryId = Convert.ToInt32(valueList[1]);
+                        animalToUpdate.Name = animalStatsList[1];
                         break;
                     case 2:
-                        animalToUpdate.Name = valueList[2];
+                        animalToUpdate.Age = Convert.ToInt32(animalStatsList[2]);
                         break;
                     case 3:
-                        animalToUpdate.Age = Convert.ToInt32(valueList[3]);
+                        animalToUpdate.Demeanor = animalStatsList[3];
                         break;
                     case 4:
-                        animalToUpdate.Demeanor = valueList[4];
+                        animalToUpdate.KidFriendly = Convert.ToBoolean(animalStatsList[4]);
                         break;
                     case 5:
-                        animalToUpdate.KidFriendly = Convert.ToBoolean(valueList[5]);
+                        animalToUpdate.PetFriendly = Convert.ToBoolean(animalStatsList[5]);
                         break;
                     case 6:
-                        animalToUpdate.PetFriendly = Convert.ToBoolean(valueList[6]);
-                        break;
-                    case 7:
-                        animalToUpdate.Weight = Convert.ToInt32(valueList[7]);
+                        animalToUpdate.Weight = Convert.ToInt32(animalStatsList[6]);
                         break;
                     default:
                         break;
@@ -281,8 +293,8 @@ namespace HumaneSociety
         internal static void UpdateAnimal(Animal animal, Dictionary<int, string> updates)
         {
             Animal animalToUpdate = db.Animals.Where(e => e.AnimalId == animal.AnimalId).FirstOrDefault();
-            
-            foreach ( int key in updates.Keys)
+
+            foreach (int key in updates.Keys)
             {
                 var value = updates[key];
 
@@ -324,48 +336,48 @@ namespace HumaneSociety
         }
 
         // TODO: Animal Multi-Trait Search
-       internal static IQueryable<Animal> SearchForAnimalByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
-       {
+        internal static IQueryable<Animal> SearchForAnimalByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
+        {
             var results = new List<Animal>();
-            foreach(Animal animal in db.Animals)
+            foreach (Animal animal in db.Animals)
             {
                 results.Add(animal);
             }
-            if(updates.ContainsKey(1))
+            if (updates.ContainsKey(1))
             {
                 results.RemoveAll(a => a.CategoryId != Int32.Parse(updates[1]));
             }
-            if(updates.ContainsKey(2))
+            if (updates.ContainsKey(2))
             {
                 results.RemoveAll(a => a.Name != updates[2]);
             }
-            if(updates.ContainsKey(3))
+            if (updates.ContainsKey(3))
             {
                 results.RemoveAll(a => a.Age != Int32.Parse(updates[3]));
             }
-            if(updates.ContainsKey(4))
+            if (updates.ContainsKey(4))
             {
                 results.RemoveAll(a => a.Demeanor != updates[4]);
             }
-            if(updates.ContainsKey(5))
+            if (updates.ContainsKey(5))
             {
                 results.RemoveAll(a => a.KidFriendly != bool.Parse(updates[5]));
             }
-            if(updates.ContainsKey(6))
+            if (updates.ContainsKey(6))
             {
                 results.RemoveAll(a => a.PetFriendly != bool.Parse(updates[6]));
             }
-            if(updates.ContainsKey(7))
+            if (updates.ContainsKey(7))
             {
                 results.RemoveAll(a => a.Weight != Int32.Parse(updates[7]));
             }
-            if(updates.ContainsKey(8))
+            if (updates.ContainsKey(8))
             {
                 results.RemoveAll(a => a.AnimalId != Int32.Parse(updates[8]));
             }
             var queryList = results.AsQueryable();
             return queryList;
-       }
+        }
 
         // TODO: Misc Animal Things
         internal static int GetCategoryId(string categoryName)
@@ -390,11 +402,11 @@ namespace HumaneSociety
                     return rabbitCategory.CategoryId;
                 default:
                     throw new NotImplementedException();
-            }            
+            }
         }
-        
+
         internal static Room GetRoom(int animalId)
-        {            
+        {
             Room animalRoom = db.Rooms.Where(e => e.AnimalId == animalId).FirstOrDefault();
             return animalRoom;
         }
@@ -419,7 +431,7 @@ namespace HumaneSociety
                     DietPlan rabbitDietPlan = db.DietPlans.Where(e => e.Name == "Rabbit Food").FirstOrDefault();
                     return rabbitDietPlan.DietPlanId;
                 default:
-                    throw new NotImplementedException(); 
+                    throw new NotImplementedException();
             }
         }
 
@@ -449,7 +461,7 @@ namespace HumaneSociety
 
         internal static void UpdateAdoption(bool isAdopted, Adoption adoption)
         {
-            switch(isAdopted)
+            switch (isAdopted)
             {
                 case true:
                     ApproveAdoption(adoption);
@@ -475,7 +487,7 @@ namespace HumaneSociety
         internal static void RemoveAdoption(int animalId, int clientId)
         {
             Adoption adoptionToRemove = db.Adoptions.Where(a => a.AnimalId == animalId && a.ClientId == clientId).FirstOrDefault();
-            if(adoptionToRemove != null)
+            if (adoptionToRemove != null)
             {
                 db.Adoptions.DeleteOnSubmit(adoptionToRemove);
                 db.SubmitChanges();
