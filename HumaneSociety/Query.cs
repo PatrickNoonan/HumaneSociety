@@ -236,9 +236,11 @@ namespace HumaneSociety
             Room openRoom = db.Rooms.Where(r => r.AnimalId == null).FirstOrDefault();
             if(openRoom != null)
             {
-                openRoom.AnimalId = animal.AnimalId;
                 db.Animals.InsertOnSubmit(animal);
                 db.SubmitChanges();
+                openRoom.AnimalId = animal.AnimalId;
+                db.SubmitChanges();
+                
             }
             else
             {
@@ -359,7 +361,8 @@ namespace HumaneSociety
             }
             if (updates.ContainsKey(1))
             {
-                results.RemoveAll(a => a.CategoryId != Int32.Parse(updates[1]));
+                var categoryEntered = db.Categories.Where(e => e.Name == updates[1]).Select(c => c.CategoryId).FirstOrDefault();
+                results.RemoveAll(a => a.CategoryId != categoryEntered);
             }
             if (updates.ContainsKey(2))
             {
