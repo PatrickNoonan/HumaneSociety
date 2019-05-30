@@ -1,2 +1,1 @@
-AnimalId, Name, Weight, Age, Demaeanor, KidFriendly, PetFriendly, Gender, AdoptionStatus, CategoryId, DietPlanId, EmployeeId
-6, "Roufus", 150, 15, "Kind", true, true, male, "Not Adopted", 2, 2, 1
+2, "Roufus", 15, "Kind", true, true, 150, male, "Not Adopted", 2, 1
