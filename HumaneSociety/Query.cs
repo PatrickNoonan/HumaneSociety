@@ -347,7 +347,10 @@ namespace HumaneSociety
             Animal AnimalToDelete = db.Animals.Where(e => e.AnimalId == animal.AnimalId).FirstOrDefault();
             db.Animals.DeleteOnSubmit(AnimalToDelete);
             Room roomToEmpty = db.Rooms.Where(r => r.AnimalId == animal.AnimalId).FirstOrDefault();
-            roomToEmpty.AnimalId = null;
+            if (roomToEmpty != null)
+            {
+                roomToEmpty.AnimalId = null;
+            }
             db.SubmitChanges();
         }
 
