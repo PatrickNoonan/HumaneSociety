@@ -185,7 +185,7 @@ namespace HumaneSociety
             }
             else
             {
-                throw new Exception();
+                throw new Exception("Employee already exists!");
             }
         }
         internal static void DeleteEmployee(Employee employee)
@@ -198,7 +198,7 @@ namespace HumaneSociety
             }
             else
             {
-                throw new Exception();
+                throw new NullReferenceException();
             }
         }
         internal static void DisplayEmployee(Employee employee)
@@ -210,7 +210,7 @@ namespace HumaneSociety
             }
             else
             {
-                throw new Exception();
+                throw new NullReferenceException();
             }
         }
         internal static void UpdateEmployee(Employee employee)
@@ -218,23 +218,39 @@ namespace HumaneSociety
             Employee employeeToUpdate = db.Employees.Where(e => e.EmployeeNumber == employee.EmployeeNumber).FirstOrDefault();
             if (employeeToUpdate != null)
             {
-                employeeToUpdate.FirstName = employee.FirstName;
-                employeeToUpdate.LastName = employee.LastName;
-                employeeToUpdate.Email = employee.Email;
+                employeeToUpdate.FirstName = UserInterface.GetStringData("new first name", "the employee's");
+                employeeToUpdate.LastName = UserInterface.GetStringData("new last name", "the employee's");
+                employeeToUpdate.EmployeeNumber = int.Parse(UserInterface.GetStringData("new employee number", "the employee's"));
+                employeeToUpdate.Email = UserInterface.GetStringData("new email", "the employee's");
                 db.SubmitChanges();
             }
             else
             {
-                throw new Exception();
+                throw new NullReferenceException();
             }
         }
 
         // TODO: Animal CRUD Operations
         internal static void AddAnimal(Animal animal)
         {
+<<<<<<< HEAD
             db.Animals.InsertOnSubmit(animal);
             db.SubmitChanges();
         }
+=======
+            Room openRoom = db.Rooms.Where(r => r.AnimalId == null).FirstOrDefault();
+            if(openRoom != null)
+            {
+                openRoom.AnimalId = animal.AnimalId;
+                db.Animals.InsertOnSubmit(animal);
+                db.SubmitChanges();
+            }
+            else
+            {
+                Console.WriteLine("All rooms are full!");
+            }
+        }    
+>>>>>>> 90c89cd6d53a276c1488625eb995f9b3d3885b94
         internal static Animal GetAnimalByID(int id)
         {
             Animal AnimalToRead = db.Animals.Where(e => e.AnimalId == id).FirstOrDefault();
@@ -322,7 +338,7 @@ namespace HumaneSociety
                         animalToUpdate.Weight = Convert.ToInt32(value);
                         break;
                     default:
-                        throw new NotImplementedException();
+                        break;
                 }
             }
             db.SubmitChanges();
@@ -332,6 +348,8 @@ namespace HumaneSociety
         {
             Animal AnimalToDelete = db.Animals.Where(e => e.AnimalId == animal.AnimalId).FirstOrDefault();
             db.Animals.DeleteOnSubmit(AnimalToDelete);
+            Room roomToEmpty = db.Rooms.Where(r => r.AnimalId == animal.AnimalId).FirstOrDefault();
+            roomToEmpty.AnimalId = null;
             db.SubmitChanges();
         }
 
@@ -382,6 +400,7 @@ namespace HumaneSociety
         // TODO: Misc Animal Things
         internal static int GetCategoryId(string categoryName)
         {
+<<<<<<< HEAD
 
             switch (categoryName)
             {
@@ -402,6 +421,20 @@ namespace HumaneSociety
                     return rabbitCategory.CategoryId;
                 default:
                     throw new NotImplementedException();
+=======
+            Category category = db.Categories.Where(e => e.Name == categoryName.ToLower()).FirstOrDefault();
+            if (category != null)
+            {
+                return category.CategoryId;
+            }
+            else
+            {
+                Category newCategory = new Category { Name = categoryName };
+                db.Categories.InsertOnSubmit(newCategory);
+                db.SubmitChanges();
+                category = db.Categories.Where(e => e.Name == categoryName).FirstOrDefault();
+                return category.CategoryId;
+>>>>>>> 90c89cd6d53a276c1488625eb995f9b3d3885b94
             }
         }
 
@@ -413,6 +446,7 @@ namespace HumaneSociety
 
         internal static int GetDietPlanId(string dietPlanName)
         {
+<<<<<<< HEAD
             switch (dietPlanName)
             {
                 case "Cat Food":
@@ -432,6 +466,16 @@ namespace HumaneSociety
                     return rabbitDietPlan.DietPlanId;
                 default:
                     throw new NotImplementedException();
+=======
+            DietPlan dietPlan = db.DietPlans.Where(d => d.Name == dietPlanName.ToLower()).FirstOrDefault();
+            if (dietPlan != null)
+            {
+                return dietPlan.DietPlanId;
+            }
+            else
+            {
+                throw new NullReferenceException();
+>>>>>>> 90c89cd6d53a276c1488625eb995f9b3d3885b94
             }
         }
 
