@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -249,7 +250,44 @@ namespace HumaneSociety
             Animal AnimalToRead = db.Animals.Where(e => e.AnimalId == id).FirstOrDefault();
             return AnimalToRead;
         }       
+        internal static void UpdateAnimalWithCsv(Animal animal)
+        {
+            String[] values = File.ReadAllText(@"C:\Users\Patrick\Documents\Development\devCodeCamp\Week_07\HumaneSociety\csvToLinq.csv").Split(',');
+            List<string> valueList = values.OfType<string>().ToList();
 
+            Animal animalToUpdate = db.Animals.Where(e => e.AnimalId == animal.AnimalId).FirstOrDefault();
+
+            for (int i = 0; i < valueList.Count; i++)
+            {
+                switch (i)
+                {
+                    case 1:
+                        animalToUpdate.CategoryId = Convert.ToInt32(valueList[1]);
+                        break;
+                    case 2:
+                        animalToUpdate.Name = valueList[2];
+                        break;
+                    case 3:
+                        animalToUpdate.Age = Convert.ToInt32(valueList[3]);
+                        break;
+                    case 4:
+                        animalToUpdate.Demeanor = valueList[4];
+                        break;
+                    case 5:
+                        animalToUpdate.KidFriendly = Convert.ToBoolean(valueList[5]);
+                        break;
+                    case 6:
+                        animalToUpdate.PetFriendly = Convert.ToBoolean(valueList[6]);
+                        break;
+                    case 7:
+                        animalToUpdate.Weight = Convert.ToInt32(valueList[7]);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            db.SubmitChanges();
+        }
         internal static void UpdateAnimal(Animal animal, Dictionary<int, string> updates)
         {
             Animal animalToUpdate = db.Animals.Where(e => e.AnimalId == animal.AnimalId).FirstOrDefault();
